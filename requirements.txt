@@ -1,0 +1,4 @@
+bottle
+simplejson
+python-bitcoinrpc
+git@github.com:OpenNetworking/gcoin-community.git
