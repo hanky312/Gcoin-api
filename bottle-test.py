@@ -51,9 +51,10 @@ def block(block_hash=''):
 #get blockindex
 @route('/blockindex/<block_hash_index>', method='GET')
 def blockindex(block_hash_index=''):
-        block_hash_index = rpc_connection.getblockhash(int(block_hash_index))
+        block_hash = rpc_connection.getblockhash(int(block_hash_index))
+        block_hash = {"blockhash " + str(block_hash_index) : block_hash}
         response.add_header("Access-Control-Allow-Origin", "*")
-        return json.dumps({'blockhash': block_hash_index})
+        return json.dumps(block_hash)
 
 #get fixedaddress
 @route('/getfixedaddress', method='GET')
