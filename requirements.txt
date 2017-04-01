@@ -1,4 +1,10 @@
-bottle
-simplejson
-python-bitcoinrpc
-git@github.com:OpenNetworking/gcoin-community.git
+appdirs (1.4.3)
+bottle (0.12.13)
+packaging (16.8)
+pip (9.0.1)
+pyparsing (2.2.0)
+python-bitcoinrpc (1.0)
+setuptools (34.3.3)
+simplejson (3.10.0)
+six (1.10.0)
+wheel (0.29.0)
