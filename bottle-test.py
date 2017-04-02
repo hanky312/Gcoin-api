@@ -61,7 +61,8 @@ def blockindex(block_hash_index=''):
 def getfixedaddressr():
         getfixedaddress = rpc_connection.getfixedaddress()
         response.add_header("Access-Control-Allow-Origin", "*")
-        return json.dumps(getfixedaddress)
+        return { "gcoin-cli getfixedaddress": getfixedaddress }
+#        return json.dumps(getfixedaddress)
 
 #gcoin-cli getmemberlist
 @route('/getmemberlist', method='GET')
@@ -80,9 +81,9 @@ def getinfo():
 #gcoin-cli getpeerinfo
 @route('/getpeerinfo', method='GET')
 def getpeerinfo():
-        getinfo = rpc_connection.getpeerinfo()
+        getpeerinfo = rpc_connection.getpeerinfo()
         response.add_header("Access-Control-Allow-Origin", "*")
-        return getinfo
+        return { "gcoin-cli getpeerinfo": getpeerinfo }
 
 #gcoin-cli getnetworkinfo
 @route('/getnetworkinfo', method='GET')
@@ -105,5 +106,65 @@ def getblockcount():
         getblockcount = {'blockcount':getblockcount}
         response.add_header("Access-Control-Allow-Origin", "*")
         return json.dumps(getblockcount)
+
+#gcoin-cli mintforminer
+@route('/mintforminer', method='GET')
+def mintforminer():
+        mintforminer = rpc_connection.mintforminer()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": mintforminer }
+
+#gcoin-cli mintforlicense
+@route('/mintforlicense', method='GET')
+def mintforlicense():
+        mintforlicense = rpc_connection.mintforlicense()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": mintforlicense }
+
+#gcoin-cli getbalance
+@route('/getbalance', method='GET')
+def getbalance():
+        getbalance = rpc_connection.getbalance()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getbalance
+
+#gcoin-cli getlicenseinfo
+@route('/getlicenseinfo/<getlicenseinfo_index>', method='GET')
+def getlicenseinfo(getlicenseinfo_index=''):
+        getlicenseinfo = rpc_connection.getlicenseinfo(int(getlicenseinfo_index))
+#        getlicenseinfo = {'getlicenseinfo ' + str(getlicenseinfo_index) : getlicenseinfo}
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getlicenseinfo
+#        return { "gcoin-cli getlicenseinfo": getlicenseinfo }
+
+#gcoin-cli getlicenselist
+@route('/getlicenselist', method='GET')
+def getlicenselist():
+        getlicenselist = rpc_connection.getlicenselist()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getlicenselist
+
+#gcoin-cli sendlicensetoaddress
+#license_comment decode tool https://hanky312.github.io/gcoin-encoder/
+license_comment = "721101000547636f696e0547636f696e22314e39534650686f6d63794e466352526e5347746335654433354c445741515671560100000000000000000000000022314e39534650686f6d63794e466352526e5347746335654433354c44574151567156000000000000000000000000000a472d636f696e2e6f72670000000000000000000000000000000000000000000000000000000000000000"
+@route('/sendlicensetoaddress/<sendlicensetoaddress_addr>/<sendlicensetoaddress_color>', method='GET')
+def sendlicensetoaddress(sendlicensetoaddress_addr='',sendlicensetoaddress_color=''):
+        sendlicensetoaddress = rpc_connection.sendlicensetoaddress(str(sendlicensetoaddress_addr),int(sendlicensetoaddress_color),license_comment)
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": sendlicensetoaddress }
+
+#gcoin-cli gettxoutaddress
+@route('/gettxoutaddress/<gettxoutaddress_address>', method='GET')
+def gettxoutaddress(gettxoutaddress_address=''):
+        gettxoutaddress = rpc_connection.gettxoutaddress(str(gettxoutaddress_address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "gettxoutaddress": gettxoutaddress }
+
+#gcoin-cli validateaddress
+@route('/validateaddress/<validateaddress_address>', method='GET')
+def validateaddress(validateaddress_address=''):
+        validateaddress = rpc_connection.validateaddress(str(validateaddress_address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return validateaddress
 
 run(host='0.0.0.0',port=8091,debug='true')
