@@ -1,3 +1,4 @@
+[![version](https://img.shields.io/badge/python-2.7-blue.svg?style=flat)](https://www.python.org)    
 # Gcoin-api
 ## Requirement
     Python 2.7
