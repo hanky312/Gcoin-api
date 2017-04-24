@@ -93,6 +93,13 @@ def getnetworkinfo():
         response.add_header("Access-Control-Allow-Origin", "*")
         return getnetworkinfo
 
+#gcoin-cli getnerate
+@route('/getgenerate')
+def getgenerate():
+        getgenerate = rpc_connection.getgenerate()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "getgenerate": getgenerate}
+
 #gcoin-cli getmininginfo
 @route('/getmininginfo', method='GET')
 def getmininginfo():
