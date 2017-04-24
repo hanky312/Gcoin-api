@@ -39,6 +39,20 @@ def tx(tx_id=''):
         response.add_header("Access-Control-Allow-Origin", "*")
         return raw_tx
 
+#gcoin-cli sendrawtransaction
+@route('/sendrawtransaction/<sendrawtransaction_data>', methon='GET')
+def sendrawtransaction(sendrawtransaction_data=''):
+        sendrawtransaction = rpc_connection.sendrawtransaction(sendrawtransaction_data)
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": sendrawtransaction }
+
+#gcoin-cli signrawtransaction
+@route('/signrawtransaction/<signrawtransaction_data>', methon='GET')
+def signrawtransaction(signrawtransaction_data=''):
+        signrawtransaction = rpc_connection.signrawtransaction(signrawtransaction_data)
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return signrawtransaction
+
 #gcoin-cli getblock
 @route('/block/<block_hash>', method='GET')
 def block(block_hash=''):
