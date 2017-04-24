@@ -19,7 +19,7 @@ class DecimalJSONEncoder(simplejson.JSONEncoder):
 #./gcoin/gcoin.conf type rpcuser; rpcpassword; rpcport
 RPC_USER = 'bitcoinrpc'
 RPC_PASSWORD = '6SWniYid45ph9VFhVPepSzin2oJSsyepWiZKnJitZELD'
-rpc_connection = AuthServiceProxy("http://%s:%s@localhost:28345"%(RPC_USER, RPC_PASSWORD))
+rpc_connection = AuthServiceProxy("http://%s:%s@localhost:58345"%(RPC_USER, RPC_PASSWORD))
 
 LENGTH_CHECK = 64
 
@@ -93,12 +93,28 @@ def getnetworkinfo():
         response.add_header("Access-Control-Allow-Origin", "*")
         return getnetworkinfo
 
-#gcoin-cli getnerate
-@route('/getgenerate')
+#gcoin-cli getgenerate
+@route('/getgenerate', method='GET')
 def getgenerate():
         getgenerate = rpc_connection.getgenerate()
         response.add_header("Access-Control-Allow-Origin", "*")
         return { "getgenerate": getgenerate}
+
+#gcoin-cli setgenerate
+#bug, unimplement
+# @route('/setgenerate/<setgenerate_id>', method='GET')
+# def setgenerate(setgenerate_id=''):
+#        setgenerate_id = setgenerate_id.lower()
+#        setgenerate = rpc_connection.setgenerate(setgenerate_id)
+#        response.add_header("Access-Control-Allow-Origin", "*")
+#        return { "setgenerate": setgenerate }
+
+#gcoin-cli getminerlist
+@route('/getminerlist', methos='GET')
+def getminerlist():
+        getminerlist = rpc_connection.getminerlist()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getminerlist
 
 #gcoin-cli getmininginfo
 @route('/getmininginfo', method='GET')
@@ -116,7 +132,7 @@ def getblockcount():
         return json.dumps(getblockcount)
 
 #gcoin-cli mint
-@route('/mint/<mint_amount>/<mint_color>')
+@route('/mint/<mint_amount>/<mint_color>', method='GET')
 def mint(mint_amount='',mint_color=''):
         mint = rpc_connection.mint(int(mint_amount),int(mint_color))
         response.add_header("Access-Control-Allow-Origin", "*")
