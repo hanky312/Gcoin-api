@@ -233,6 +233,13 @@ def importprivkey(privkey=''):
         response.add_header("Access-Control-Allow-Origin", "*")
         return { "importprivkey": privkey }
 
+#gcoin-cli dumpprivkey
+@route('/dumpprivkey/<address>', methon='GET')
+def dumpprivkey(address=''):
+        dumpprivkey = rpc_connection.dumpprivkey(str(address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "privkey": dumpprivkey }
+
 #gcoin-cli gettxoutaddress
 @route('/gettxoutaddress/<gettxoutaddress_address>', method='GET')
 def gettxoutaddress(gettxoutaddress_address=''):
