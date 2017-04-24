@@ -218,6 +218,14 @@ def getaddressbalance(address=''):
         getaddressbalance = rpc_connection.getaddressbalance(str(address))
         response.add_header("Access-Control-Allow-Origin", "*")
         return getaddressbalance
+
+#gcoin-cli importaddress
+@route('/importaddress/<address>', method='GET')
+def importaddress(address=''):
+        importaddress = rpc_connection.importaddress(str(address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "importaddress": address }
+
 #gcoin-cli gettxoutaddress
 @route('/gettxoutaddress/<gettxoutaddress_address>', method='GET')
 def gettxoutaddress(gettxoutaddress_address=''):
