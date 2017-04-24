@@ -189,7 +189,14 @@ def sendlicensetoaddress(sendlicensetoaddress_addr='',sendlicensetoaddress_color
 def sendtoaddress(address='',amount='',color=''):
         sendtoaddress = rpc_connection.sendtoaddress(str(address),int(amount),int(color))
         response.add_header("Access-Control-Allow-Origin", "*")
-        return { "tx_id": sendtoaddress}
+        return { "tx_id": sendtoaddress }
+
+#gcoin-cli sendfrom
+@route('/sendfrom/<from_address>/<to_adddress>/<amount>/<color>', methos='GET')
+def sendfrom(from_address='',to_adddress='',amount='',color=''):
+        sendfrom = rpc_connection.sendfrom(str(from_address),str(to_adddress),int(amount),int(color))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": sendfrom }
 
 #gcoin-cli gettxoutaddress
 @route('/gettxoutaddress/<gettxoutaddress_address>', method='GET')
