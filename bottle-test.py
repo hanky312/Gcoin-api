@@ -108,6 +108,13 @@ def getblockcount():
         response.add_header("Access-Control-Allow-Origin", "*")
         return json.dumps(getblockcount)
 
+#gcoin-cli mint
+@route('/mint/<mint_amount>/<mint_color>')
+def mint(mint_amount='',mint_color=''):
+        mint = rpc_connection.mint(int(mint_amount),int(mint_color))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": mint }
+
 #gcoin-cli mintforminer
 @route('/mintforminer', method='GET')
 def mintforminer():

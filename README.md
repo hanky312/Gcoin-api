@@ -6,7 +6,7 @@
 ## Run server
 ### Activate virtualenv
     $ virtualenv .env
-    $ source ./env/bin/activate
+    $ source .env/bin/activate
     $ pip install -r requirements.txt
 ### Start server
     $ python bottle-test.py
