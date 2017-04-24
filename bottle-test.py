@@ -198,6 +198,12 @@ def sendfrom(from_address='',to_adddress='',amount='',color=''):
         response.add_header("Access-Control-Allow-Origin", "*")
         return { "tx_id": sendfrom }
 
+#gcoin-cli getaddressbalance
+@route('/getaddressbalance/<address>', method='GET')
+def getaddressbalance(address=''):
+        getaddressbalance = rpc_connection.getaddressbalance(str(address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getaddressbalance
 #gcoin-cli gettxoutaddress
 @route('/gettxoutaddress/<gettxoutaddress_address>', method='GET')
 def gettxoutaddress(gettxoutaddress_address=''):
