@@ -3,6 +3,7 @@
 
 from bottle import route, request, run, response
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+from datetime import datetime
 
 import urllib,json
 import pprint
@@ -18,7 +19,7 @@ class DecimalJSONEncoder(simplejson.JSONEncoder):
 #./gcoin/gcoin.conf type rpcuser; rpcpassword; rpcport
 RPC_USER = 'bitcoinrpc'
 RPC_PASSWORD = '6SWniYid45ph9VFhVPepSzin2oJSsyepWiZKnJitZELD'
-rpc_connection = AuthServiceProxy("http://%s:%s@192.168.31.158:58345"%(RPC_USER, RPC_PASSWORD))
+rpc_connection = AuthServiceProxy("http://%s:%s@localhost:58345"%(RPC_USER, RPC_PASSWORD))
 
 LENGTH_CHECK = 64
 
@@ -92,6 +93,29 @@ def getnetworkinfo():
         response.add_header("Access-Control-Allow-Origin", "*")
         return getnetworkinfo
 
+#gcoin-cli getgenerate
+@route('/getgenerate', method='GET')
+def getgenerate():
+        getgenerate = rpc_connection.getgenerate()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "getgenerate": getgenerate}
+
+#gcoin-cli setgenerate
+#bug, unimplement
+# @route('/setgenerate/<setgenerate_id>', method='GET')
+# def setgenerate(setgenerate_id=''):
+#        setgenerate_id = setgenerate_id.lower()
+#        setgenerate = rpc_connection.setgenerate(setgenerate_id)
+#        response.add_header("Access-Control-Allow-Origin", "*")
+#        return { "setgenerate": setgenerate }
+
+#gcoin-cli getminerlist
+@route('/getminerlist', methos='GET')
+def getminerlist():
+        getminerlist = rpc_connection.getminerlist()
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getminerlist
+
 #gcoin-cli getmininginfo
 @route('/getmininginfo', method='GET')
 def getmininginfo():
@@ -106,6 +130,13 @@ def getblockcount():
         getblockcount = {'blockcount':getblockcount}
         response.add_header("Access-Control-Allow-Origin", "*")
         return json.dumps(getblockcount)
+
+#gcoin-cli mint
+@route('/mint/<mint_amount>/<mint_color>', method='GET')
+def mint(mint_amount='',mint_color=''):
+        mint = rpc_connection.mint(int(mint_amount),int(mint_color))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": mint }
 
 #gcoin-cli mintforminer
 @route('/mintforminer', method='GET')
@@ -166,5 +197,27 @@ def validateaddress(validateaddress_address=''):
         validateaddress = rpc_connection.validateaddress(str(validateaddress_address))
         response.add_header("Access-Control-Allow-Origin", "*")
         return validateaddress
+
+#callback_url & save to .txt
+@route ('/testcallback', method='POST')
+def testcallback(UpdatedData=None):
+    Data = request.body.read()
+    fileDT = datetime.now().strftime('%Y%m%d_%H%M%S')
+    with open(fileDT+'.txt', 'a') as f:
+        f.write(Data)
+    print Data
+    return Data
+
+#
+@route ('/notify/<tx_id>', method='POST')
+def tagTweets(tx_id=None,UpdatedData=None):
+    response.content_type = 'application/json'
+    Data = json.load(request.body)
+    id = request.json['id']
+    tx_hash = request.json['tx_hash']
+    confirmation_count = request.json['confirmation_count']
+    callback_url = request.json['callback_url']
+    created_time = request.json['created_time']
+    return Data
 
 run(host='0.0.0.0',port=8091,debug='true')

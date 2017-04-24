@@ -5,10 +5,11 @@
     virtualenv # pip install virtualenv
 ## Run server
 ### Activate virtualenv
-    $ source ./env/bin/activate
+    $ virtualenv .env
+    $ source .env/bin/activate
     $ pip install -r requirements.txt
 ### Start server
     $ python bottle-test.py
 ### Stop server
-    $ CTRL+C
+    $ Hit Ctrl-C to quit
     $ deactivate
