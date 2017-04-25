@@ -39,6 +39,20 @@ def tx(tx_id=''):
         response.add_header("Access-Control-Allow-Origin", "*")
         return raw_tx
 
+#gcoin-cli sendrawtransaction
+@route('/sendrawtransaction/<sendrawtransaction_data>', methon='GET')
+def sendrawtransaction(sendrawtransaction_data=''):
+        sendrawtransaction = rpc_connection.sendrawtransaction(sendrawtransaction_data)
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": sendrawtransaction }
+
+#gcoin-cli signrawtransaction
+@route('/signrawtransaction/<signrawtransaction_data>', methon='GET')
+def signrawtransaction(signrawtransaction_data=''):
+        signrawtransaction = rpc_connection.signrawtransaction(signrawtransaction_data)
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return signrawtransaction
+
 #gcoin-cli getblock
 @route('/block/<block_hash>', method='GET')
 def block(block_hash=''):
@@ -183,6 +197,48 @@ def sendlicensetoaddress(sendlicensetoaddress_addr='',sendlicensetoaddress_color
         sendlicensetoaddress = rpc_connection.sendlicensetoaddress(str(sendlicensetoaddress_addr),int(sendlicensetoaddress_color),license_comment)
         response.add_header("Access-Control-Allow-Origin", "*")
         return { "tx_id": sendlicensetoaddress }
+
+#gcoin-cli sendtoaddress
+@route('/sendtoaddress/<address>/<amount>/<color>', method='GET')
+def sendtoaddress(address='',amount='',color=''):
+        sendtoaddress = rpc_connection.sendtoaddress(str(address),int(amount),int(color))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": sendtoaddress }
+
+#gcoin-cli sendfrom
+@route('/sendfrom/<from_address>/<to_adddress>/<amount>/<color>', methos='GET')
+def sendfrom(from_address='',to_adddress='',amount='',color=''):
+        sendfrom = rpc_connection.sendfrom(str(from_address),str(to_adddress),int(amount),int(color))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "tx_id": sendfrom }
+
+#gcoin-cli getaddressbalance
+@route('/getaddressbalance/<address>', method='GET')
+def getaddressbalance(address=''):
+        getaddressbalance = rpc_connection.getaddressbalance(str(address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return getaddressbalance
+
+#gcoin-cli importaddress
+@route('/importaddress/<address>', method='GET')
+def importaddress(address=''):
+        importaddress = rpc_connection.importaddress(str(address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "importaddress": address }
+
+#gcoin-cli importprivkey
+@route('/importprivkey/<privkey>', methon='GET')
+def importprivkey(privkey=''):
+        importprivkey = rpc_connection.importprivkey(str(privkey))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "importprivkey": privkey }
+
+#gcoin-cli dumpprivkey
+@route('/dumpprivkey/<address>', methon='GET')
+def dumpprivkey(address=''):
+        dumpprivkey = rpc_connection.dumpprivkey(str(address))
+        response.add_header("Access-Control-Allow-Origin", "*")
+        return { "privkey": dumpprivkey }
 
 #gcoin-cli gettxoutaddress
 @route('/gettxoutaddress/<gettxoutaddress_address>', method='GET')
